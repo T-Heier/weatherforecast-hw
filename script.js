@@ -61,8 +61,21 @@ function UV(data) {
     cityInfo[0].appendChild(createLi);
 }
 
-function createCards(data) {
-    console.log(data)
+
+function cardInfo(data) {
+    var forecastInfo = []
+    var fiveDayArr = data.list
+    fiveDayArr.forEach(dateCheck);
+    function dateCheck(dates) {
+        if (dates.dt_txt.includes("09:00:00")) {
+            forecastInfo.push(dates)
+        }
+    }
+    createCards(forecastInfo);
+}
+
+function createCards(forecastInfo) {
+    
 }
 
 
