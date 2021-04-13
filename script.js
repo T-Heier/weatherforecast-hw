@@ -3,8 +3,8 @@ var searchBtn = document.getElementById("buttonSearch")
 searchBtn.onclick = function(){
     var cityName = document.getElementsByClassName("cityInput")[0].value
     
-    fiveDay(cityName)
     getWeather(cityName)
+    fiveDay(cityName)
 }
 
 function fiveDay(cityName) {
@@ -13,7 +13,7 @@ function fiveDay(cityName) {
     .then(function(response) {
         return response.json()})
     .then(function (data) {
-        createCards(data)
+        cardInfo(data)
     })
 }
 
@@ -38,7 +38,11 @@ function getWeather(cityName) {
 const cityName = document.getElementsByClassName("cityName")
 const cityInfo = document.getElementsByClassName("cityWeather")
 
+// this creates all the current weather data
 function appendData(data) {
+    // if (cityName.childNodes > 0) {
+    //     cityName.removeChild()
+    // }
     let createH1 = document.createElement("h1")
     let cityWeather = [data.main.temp, data.main.humidity, data.wind.speed, data.name]
     var createLi;
@@ -61,7 +65,7 @@ function UV(data) {
     cityInfo[0].appendChild(createLi);
 }
 
-
+// this gets the selected days i want for my forecast infomation
 function cardInfo(data) {
     var forecastInfo = []
     var fiveDayArr = data.list
@@ -71,11 +75,34 @@ function cardInfo(data) {
             forecastInfo.push(dates)
         }
     }
+    // localStorage.setItem.JSON.stringify('city data', forecastInfo)
     createCards(forecastInfo);
 }
 
+
+const cards = document.getElementById("5DayForecast")
+// this gets the data for the card information
 function createCards(forecastInfo) {
-    
+    var foreData = []
+    var createLi;
+    var createUl;
+    for (i = 0; i < forecastInfo.length; i++) {
+        foreData.push(forecastInfo[i].dt_txt)
+        foreData.push(forecastInfo[i].main.temp)
+        foreData.push(forecastInfo[i].main.humidity)
+        foreData.push(forecastInfo[i].wind.speed)
+    }
+    for (j = 0; j < foreData.length; j+=4) {
+        createUl = document.createElement('ul')
+        cards.appendChild(createUl)
+        for (k = 0; k < 4; k++) {
+            createLi = document.createElement("li")
+            createLi.textContent = foreData[j+k]
+            createUl.appendChild(createLi)
+        }
+
+    }
+
 }
 
 
