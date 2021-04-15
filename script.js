@@ -1,11 +1,20 @@
 var searchBtn = document.getElementById("buttonSearch")
 
+var key = "b82055c3c49f1d8771873add039c1767"
+
 searchBtn.onclick = function(){
     var cityName = document.getElementsByClassName("cityInput")[0].value
     
     getWeather(cityName)
     fiveDay(cityName)
 }
+
+function appendLocal() {
+    localStorage.getItem('forecastInfo', JSON.parse(forecastInfo))
+    createCards(forecastInfo);
+}
+
+// appendLocal(forecastInfo);
 
 function fiveDay(cityName) {
 
@@ -40,9 +49,9 @@ const cityInfo = document.getElementsByClassName("cityWeather")
 
 // this creates all the current weather data
 function appendData(data) {
-    // if (cityName.childNodes > 0) {
-    //     cityName.removeChild()
-    // }
+    if (cityInfo.childNodes > 0) {
+        cityInfo.removeChild()
+    }
     let createH1 = document.createElement("h1")
     let cityWeather = [data.main.temp, data.main.humidity, data.wind.speed, data.name]
     var createLi;
@@ -75,7 +84,7 @@ function cardInfo(data) {
             forecastInfo.push(dates)
         }
     }
-    // localStorage.setItem.JSON.stringify('city data', forecastInfo)
+    localStorage.setItem('forecastInfo', JSON.stringify(forecastInfo));
     createCards(forecastInfo);
 }
 
